@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { apiurl } from '../apiurl';
 import axios from 'axios'
-import { toast } from 'react-toastify'
+import {ToastContainer, toast } from 'react-toastify'
 
 import { useNavigate } from 'react-router-dom';
 
 
-const Login = ({ setIsUser }) => {
+const Login = ({handleLogin}) => {
 
   const [isLogin, setIsLogin] = useState(false);
 
@@ -33,11 +33,14 @@ const Login = ({ setIsUser }) => {
       });
 
       sessionStorage.setItem("token", response?.data?.token);
-      sessionStorage.setItem("user", response.data.user[0])
-      toast.success('Logged in');
-      navigate('/home')
-
-
+      let user = JSON.stringify(response?.data?.user[0]);
+      // console.log(user)
+      
+      sessionStorage.setItem("user", user);
+      handleLogin()
+      toast.success(response?.data?.message);
+      navigate('/home/paper')
+      
     } catch (error) {
 
       console.log(error);
@@ -64,6 +67,7 @@ const Login = ({ setIsUser }) => {
 
   return (
     <div className='w-screen h-screen flex items-center justify-center'>
+    <ToastContainer />
       <div className='flex items-center justify-evenly w-[80%]'>
 
         <div >
