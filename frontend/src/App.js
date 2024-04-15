@@ -13,7 +13,7 @@ function App() {
   const [expirationTime, setExpirationTime] = useState(
     sessionStorage.getItem('expirationTime')
   );
-
+ 
   useEffect(() => {
     const checkSession = () => {
       const currentTime = new Date().getTime();
@@ -56,7 +56,7 @@ function App() {
 
         </Route>)}
         <Route
-          path="*"
+          path="/"
           element={<Login handleLogin={handleLogin} />}
         />
       </Routes>

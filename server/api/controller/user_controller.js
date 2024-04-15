@@ -8,7 +8,7 @@ const userModel = mongoose.model('userModel');
 
 const profileUpdate = async (req, res) => {
     try {
-        const { fullName, email, phone, description } = req.body
+        const { fullName, email, phone } = req.body
         // console.log(req.body);
         const user = await userModel.findById(req.user._id)
         // console.log(user);
@@ -17,7 +17,7 @@ const profileUpdate = async (req, res) => {
         }
         user.fullName = fullName;
         user.phone = phone;
-        user.description = description
+        
         user.email = email;
 
         // Save the updated user
