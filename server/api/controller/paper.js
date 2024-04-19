@@ -18,22 +18,45 @@ const question = async (req, res) => {
     }
 }
 
-const answer = async (req, res) => {
-    const { answers } = req.body;
-    const userId = req.user._id;
-    // Example: save answers to MongoDB
-    // Assuming you have a Question model defined
-    answers.forEach(async ({ id, answer }) => {
-      try {
-        const newAnswer = new answerModel({ questionId: id, answer, userId: userId });
-        await newAnswer.save();
-      } catch (err) {
-        console.error('Error saving answer:', err);
-      }
-    });
+// const answer = async (req, res) => {
+//     const { answers } = req.body;
+//     const userId = req.user._id;
+//     // Example: save answers to MongoDB
+//     // Assuming you have a Question model defined
+//     answers.forEach(async ({ id, answer }) => {
+//       try {
+//         const newAnswer = new userModel({ questionId: id, answer,  });
+//         await newAnswer.save();
+//       } catch (err) {
+//         console.error('Error saving answer:', err);
+//       }
+//     });
   
+//     res.status(200).send('Answers submitted successfully');
+//   }
+
+
+const answer = async (req, res) => {
+  const { answers } = req.body;
+  const userId = req.user._id; 
+
+  try {
+    const user = await userModel.findOneAndUpdate(
+      { _id: userId },
+      { $push: { answers: { $each: answers } } },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
     res.status(200).send('Answers submitted successfully');
+  } catch (err) {
+    console.error('Error saving answers:', err);
+    res.status(500).send('Error saving answers');
   }
+};
   
 
 module.exports = { question,answer };

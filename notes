@@ -1,0 +1,9 @@
+watch video https://drive.google.com/file/d/1hyzTpFsdcdMev4pS-uUD0oixUWG4QQvR/view?usp=sharing
+
+step 1 :  cd frontend
+step 2 : npm i 
+step 3 : npm start
+step 4 : open new tenminal
+step 5 : cd server  
+step 6 : npm i
+step 7 : nodemon

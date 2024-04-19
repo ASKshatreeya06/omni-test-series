@@ -3,15 +3,19 @@ const mongoose = require('mongoose');
 const paperModel = mongoose.Schema({
     question: {
         type: String,
-        required: true
+        require: true
     },
     options: [{
         type: String,
-        required: true
+        require: true
     }],
     answer: {
         type: Number,
-        required: true
+        require: true
+    },
+    level:{
+        type:String,
+        require:true
     }
 }, { timestamps: true });
 

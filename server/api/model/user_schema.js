@@ -8,11 +8,11 @@ const userModel = mongoose.Schema({
         type: String,
         require: true
     },
-   
+
     userName: {
-        type:String,
-        require:true,
-        unique:true
+        type: String,
+        require: true,
+        unique: true
     },
     userImage: {
         type: String,
@@ -29,8 +29,12 @@ const userModel = mongoose.Schema({
     password: {
         type: String,
         require: true
-    }
-},{timestamps:true})
+    },
+    answers: [
+       { questionId: { type: mongoose.Schema.Types.ObjectId, ref: 'paperModel', required: true },
+        answer: { type: String, required: true }}
+    ]
+}, { timestamps: true })
 mongoose.model('userModel', userModel);
 module.exports = userModel;
 
