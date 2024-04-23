@@ -26,11 +26,7 @@ const Questionnaire = () => {
                 });
 
                 setPaperData(response.data.paper || []);
-                const counts = { easy: 0, medium: 0, hard: 0 };
-                response.data.paper.forEach(question => {
-                    counts[question.level]++;
-                });
-                setLevelCounts(counts);
+
             } catch (error) {
                 console.error('Error fetching questions:', error);
             }
@@ -38,6 +34,19 @@ const Questionnaire = () => {
 
         fetchQuestions();
     }, []);
+    useEffect(() => {
+        buildChatData()
+    }, [paperData, currentQuestionIndex])
+    const buildChatData = () => {
+        const questions = paperData.slice(0, currentQuestionIndex + 1);
+
+        const counts = { easy: 0, medium: 0, hard: 0 };
+
+        questions.forEach(question => {
+            counts[question.level]++;
+        });
+        setLevelCounts(counts);
+    }
 
     const handleAnswerChange = (questionId, answer) => {
         var result = answers;
@@ -87,7 +96,7 @@ const Questionnaire = () => {
                     {successMessage}
                 </div>
             ) : (
-                <div className='flex h-[80%]  items-center flex-row justify-center' style={{width:'90vw'}}>
+                <div className='flex h-[80%]  items-center flex-row justify-center' style={{ width: '90vw' }}>
                     <div className="flex h-[80%] w-[70%] items-center flex-col justify-center">
                         <h1 className="font-bold text-3xl">Question</h1>
                         {paperData.length > 0 && (
@@ -163,7 +172,7 @@ const Questionnaire = () => {
                         {successMessage && <p>{successMessage}</p>}
                     </div>
                     <div className=" flex items-center flex-col h-[50%]">
-                        <div style={{marginBottom:'1rem'}}>
+                        <div style={{ marginBottom: '1rem' }}>
                             <span className='bg-[#B76EE1] mx-4 px-2' >easy</span><span className='bg-[#F4E873] mx-4 px-2'>medium</span><span className='bg-[#FF5733] mx-4  px-2'>hard</span>
                         </div>
                         <PieChart
@@ -175,7 +184,7 @@ const Questionnaire = () => {
                             lineWidth={50}
                             totalValue={levelCounts.easy + levelCounts.medium + levelCounts.hard}
                         />
-                        <div> Total number of questions : {levelCounts.easy+levelCounts.medium+levelCounts.hard}</div>
+                        <div> Total number of questions : {levelCounts.easy + levelCounts.medium + levelCounts.hard}</div>
                     </div>
                 </div>
             )}

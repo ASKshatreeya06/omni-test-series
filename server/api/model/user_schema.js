@@ -31,8 +31,8 @@ const userModel = mongoose.Schema({
         require: true
     },
     answers: [
-       { questionId: { type: mongoose.Schema.Types.ObjectId, ref: 'paperModel', required: true },
-        answer: { type: String, required: true }}
+       { questionId: { type: mongoose.Schema.Types.ObjectId, ref: 'paperModel', require: true },
+        answer: { type: String, require: true }}
     ]
 }, { timestamps: true })
 mongoose.model('userModel', userModel);
